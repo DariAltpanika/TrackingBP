@@ -1,2 +1,61 @@
-package com.bpcounter.model;public class Task {
+package com.bpcounter.model;
+
+public enum Task {
+    CASE("Кейс", "Открыть 1 серебряный кейс/золотой кейс за донат поинты", 1, 10),
+    VISIT_THE_SITE("Посетить сайт", "достать телефон и посетить любой сайт", 1, 1),
+    JOIN_BRAWL("Зайти в канал Brawl", "достать телефон и зайти в любой канал Brawl", 1, 1),
+    LIKE_THE_MATCH("Поставить лайк в Match", "достать телефон и поставить лайк любой анкете в Match", 1, 1),
+    PET_COMMANDS("Дать команды питомцу", "Дать команды питомцу 15 раз (удачные)", 15, 2),
+    THROW_A_BALL_TO_YOUR_PET("Кинуть мяч питомцу", "Кинуть мяч питомцу 15 раз", 15, 2),
+    SCROLL_THE_INTERSERVER_WHEEL("Прокрутить межсерверное колесо", "Прокрутить межсерверное колесо в казино не меньше чем на 100 фишек", 1, 3),
+    WIN_AT_ARM_WRESTLING("Победить в армрестлинге", "Одержать победу в армрестлинге (требуется 2 участника)", 1, 1),
+    TAKE_PART_IN_THE_MONEY_RACE("Принять участие в гонке на деньги", "Поучаствовать в гонке не менее чем на 1000 долларов", 1, 1),
+    JOIN_THE_MAFIA_CASINO("Сыграть в мафию (в казино)", "Сыграть в мафию в казино (требуется минимум 2 участника)", 1, 3),
+    SCORES_IN_BASKETBALL("Забить мячи в баскетболе", "Забить 2 мяча в баскетбол (достаточно одного человека)", 2, 1),
+    SCORE_A_GOAL_IN_FOOTBALL("Забить мячи в футболе", "Забить 2 мяча в футбол (достаточно одного человека)", 2, 1),
+    TAKE_PART_IN_VOLLEYBALL("Принять участие в волейболе", "Поиграть в волейбол 1 минуту (достаточно одного человека)", 1, 1),
+    TAKE_PART_IN_TABLE_TENNIS("Принять участие в настольном теннисе", "Поиграть в настольный теннис 1 минуту (достаточно одного человека)", 1, 1),
+    TAKE_PART_IN_TENNIS("Принять участие в большом теннисе", "Поиграть в большой теннис 1 минуту (достаточно одного человека)", 1, 1),
+    WIN_AT_DARTS("Победить в дартсе", "Одержать победу в дартс (достаточно одного человека)", 1, 1),
+    RIDE_ONE_STATION_BY_METRO("Проехать одну станцию метро", "Проехать одну станцию метро", 1, 2),
+    PRACTICE_AT_THE_SHOOTING_RANGE("Пройти тренировку в тире", "Пройти удачную тренировку в тире", 1, 2),
+    BUY_A_LOTTERY_TICKET("Купить лотерейный билет", "Купить лотерейный билет в телефоне", 1, 1),
+    PUT_THE_VIDEO_IN_THE_CINEMA("Поставить видео в кинотеатре", "5 раз поставить видео в кинотеатре", 5, 1),
+    RENT_A_FILM_STUDIO("Арендовать киностудию", "Арендовать киностудию", 1, 2),
+    WORK_AT_THE_PORT("Поработать в порту", "Устроиться работать в порт и сделать 25 действий", 25, 1),
+    WORK_AT_A_CONSTRUCTION_SITE("Поработать на стройке", "Устроиться работать на стройку и сделать 25 действий", 25, 1),
+    WORK_IN_A_MINE("Поработать на шахте", "Устроиться работать на шахту и сделать 25 действий", 25, 1),
+    CATCH_FISH("Выловить рыб", "Выловить 25 рыб", 25, 4),
+    COMPLETE_CLUB_TASKS("Выполнить задания клубов", "Выполнить 2 задания клуба", 2, 4),
+    EXERCISE_IN_THE_GYM("Позаниматься в спортивном зале", "Сделать 20 подходов в спортивном зале", 20, 1),
+    WORK_AS_A_BUS_DRIVER("Устроиться работать водителем автобуса", "Проехать 2 рейса водителем автобуса", 2, 1),
+    WORK_ON_A_FARM("Устроиться работать на ферму", "Сделать 10 действий на ферме", 10, 1);
+
+    private final String displayName;
+    private final String description;
+    private final int count;
+    private final int rewardPoints;
+
+    Task(String displayName, String description, int count, int rewardPoints) {
+        this.displayName = displayName;
+        this.description = description;
+        this.count = count;
+        this.rewardPoints = rewardPoints;
+    }
+
+    public String getDisplayName() {
+        return displayName;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public int getReward() {
+        return rewardPoints;
+    }
 }
