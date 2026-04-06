@@ -1,6 +1,7 @@
 package com.bpcounter.model;
 
 public enum Task {
+    //все задачи
     CASE("Кейс", "Открыть 1 серебряный кейс/золотой кейс за донат поинты", 1, 10),
     VISIT_THE_SITE("Посетить сайт", "достать телефон и посетить любой сайт", 1, 1),
     JOIN_BRAWL("Зайти в канал Brawl", "достать телефон и зайти в любой канал Brawl", 1, 1),
@@ -31,11 +32,12 @@ public enum Task {
     WORK_AS_A_BUS_DRIVER("Устроиться работать водителем автобуса", "Проехать 2 рейса водителем автобуса", 2, 1),
     WORK_ON_A_FARM("Устроиться работать на ферму", "Сделать 10 действий на ферме", 10, 1);
 
-    private final String displayName;
-    private final String description;
-    private final int count;
-    private final int rewardPoints;
+    private final String displayName; //название задачи
+    private final String description; //описание задачи
+    private final int count; //Количество действий/минут
+    private final int rewardPoints; //награда за выполнение
 
+    //конструктор
     Task(String displayName, String description, int count, int rewardPoints) {
         this.displayName = displayName;
         this.description = description;
@@ -43,18 +45,22 @@ public enum Task {
         this.rewardPoints = rewardPoints;
     }
 
+    //геттер названия
     public String getDisplayName() {
         return displayName;
     }
 
+    //геттер описания
     public String getDescription() {
         return description;
     }
 
+    //геттер количества действий/минут
     public int getCount() {
         return count;
     }
 
+    //геттер награды
     public int getReward() {
         return rewardPoints;
     }
