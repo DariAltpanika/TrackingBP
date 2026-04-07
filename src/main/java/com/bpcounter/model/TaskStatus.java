@@ -47,6 +47,11 @@ public class TaskStatus {
         return task.getCount() - currentCount;
     }
 
+    //получение задачи
+    public Task getTask() {
+        return task;
+    }
+
     //сброс прогресса
     public void reset() {
         currentCount = 0;
