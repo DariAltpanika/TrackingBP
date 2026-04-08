@@ -1,6 +1,7 @@
 package com.bpcounter;
 
 import javafx.application.Application;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
@@ -13,18 +14,10 @@ public class Main extends Application {
         launch(args);
     }
 
-    @Override
     public void start(Stage stage) throws Exception {
-        // Создаем простую надпись
         Label label = new Label("JavaFX работает!");
-
-        // Размещаем надпись на панели
-        StackPane root = new StackPane(label);
-
-        // Создаем сцену размером 400x300
-        Scene scene = new Scene(root, 400, 300);
-
-        // Настраиваем окно
+        StackPane root = new StackPane(new Node[]{label});
+        Scene scene = new Scene(root, 400.0, 300.0);
         stage.setTitle("Тест JavaFX");
         stage.setScene(scene);
         stage.show();
