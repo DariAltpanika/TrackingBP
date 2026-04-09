@@ -10,14 +10,14 @@
 <?import javafx.scene.text.Font?>
 
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="567.0" prefWidth="798.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="567.0" prefWidth="798.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.bpcounter.controller.MainController">
     <children>
         <Label id="taskTitle" alignment="CENTER" layoutX="103.0" prefHeight="51.0" prefWidth="237.0" text="Список задач:">
             <font>
                 <Font size="35.0" />
             </font>
         </Label>
-        <ListView id="listTask" layoutX="35.0" layoutY="49.0" prefHeight="474.0" prefWidth="372.0" />
+        <ListView id="listTask" fx:id="taskList" layoutX="35.0" layoutY="49.0" prefHeight="474.0" prefWidth="372.0" />
         <ProgressBar id="progressBar" layoutX="451.0" layoutY="252.0" prefHeight="41.0" prefWidth="305.0" progress="0.0" />
         <Label id="selectedTask" alignment="CENTER" contentDisplay="CENTER" layoutX="418.0" layoutY="171.0" prefHeight="51.0" prefWidth="372.0" text="Выберите задачу из списка">
             <font>
