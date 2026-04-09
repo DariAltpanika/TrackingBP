@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="567.0" prefWidth="798.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <Label id="taskTitle" alignment="CENTER" layoutX="103.0" prefHeight="51.0" prefWidth="237.0" text="Список задач:">
+            <font>
+                <Font size="35.0" />
+            </font>
+        </Label>
+        <ListView id="listTask" layoutX="35.0" layoutY="49.0" prefHeight="474.0" prefWidth="372.0" />
+        <ProgressBar id="progressBar" layoutX="451.0" layoutY="252.0" prefHeight="41.0" prefWidth="305.0" progress="0.0" />
+        <Label id="selectedTask" alignment="CENTER" contentDisplay="CENTER" layoutX="418.0" layoutY="171.0" prefHeight="51.0" prefWidth="372.0" text="Выберите задачу из списка">
+            <font>
+                <Font size="29.0" />
+            </font>
+        </Label>
+        <Button id="addOneButton" alignment="CENTER" layoutX="592.0" layoutY="319.0" mnemonicParsing="false" prefHeight="57.0" prefWidth="142.0" text="Добавить +1">
+            <font>
+                <Font size="18.0" />
+            </font>
+        </Button>
+        <TextField id="numberInputField" alignment="CENTER" layoutX="479.0" layoutY="319.0" prefHeight="57.0" prefWidth="97.0" promptText="кастомное">
+            <font>
+                <Font size="15.0" />
+            </font>
+        </TextField>
+        <CheckBox id="VipStatus" alignment="CENTER" layoutX="618.0" layoutY="510.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="166.0" text="Платинум ВИП">
+            <font>
+                <Font size="18.0" />
+            </font>
+        </CheckBox>
+        <Button id="statisticsButton" alignment="CENTER" layoutX="533.0" layoutY="49.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="142.0" text="Статистика">
+            <font>
+                <Font size="22.0" />
+            </font>
+        </Button>
+    </children>
+</AnchorPane>
