@@ -24,6 +24,8 @@ public class Main extends Application {
         // 3. Настраиваем окно
         primaryStage.setTitle("BPCounter");
         primaryStage.setScene(scene);
+        primaryStage.setResizable(false);
+        primaryStage.setMaximized(false);
         primaryStage.show();
     }
 
