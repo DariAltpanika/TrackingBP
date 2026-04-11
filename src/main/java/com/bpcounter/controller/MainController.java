@@ -34,6 +34,7 @@ public class MainController {
             taskList.getItems().add(name);
             taskMap.put(task, new TaskStatus(task));
         }
+        initializationCellFactory();
     }
 
     //установка слушателя на список заданий
@@ -41,6 +42,28 @@ public class MainController {
         taskList.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
             if (newVal != null) {
                 onTaskSelected(newVal);
+            }
+        });
+    }
+
+    //метод установки цвета ячейки таблицы
+    private void initializationCellFactory() {
+        taskList.setCellFactory(param -> new ListCell<String>() {
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                    setStyle("");
+                    return;
+                }
+                setText(item);
+                TaskStatus taskStatus = taskMap.get(getTaskByDisplayName(item));
+                if (taskStatus != null && taskStatus.isTaskCompleted()) {
+                    setStyle("-fx-background-color: #51cf66; -fx-text-fill: white;");
+                } else {
+                    setStyle("");
+                }
             }
         });
     }
@@ -70,6 +93,7 @@ public class MainController {
            taskStatus.addProgress(1);
            updateProgressBar(taskStatus);
            buttonLockSetting(taskStatus);
+        taskList.refresh();
     }
 
     //метод обработки кнопки "добавить все"
@@ -80,6 +104,7 @@ public class MainController {
         updateProgressBar(taskStatus);
         completeEverythingButton.setDisable(true);
         setValueButton.setDisable(true);
+        taskList.refresh();
     }
 
     //кнопка показать подробности
@@ -129,6 +154,14 @@ public class MainController {
     private Task getTaskByDisplayName() {
         for (Task task : Task.values()) {
             if (task.getDisplayName().equals(nameCurrentValue)) return task;
+        }
+        return null;
+    }
+
+    //получение задания по имени для фабрики
+    private Task getTaskByDisplayName(String displayName) {
+        for (Task task : Task.values()) {
+            if (task.getDisplayName().equals(displayName)) return task;
         }
         return null;
     }
