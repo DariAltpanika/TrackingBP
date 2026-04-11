@@ -26,6 +26,8 @@ public class MainController {
     @FXML private Button hideButton;
     @FXML Label taskInformationLabel;
 
+
+    //блок инициализации
     @FXML
     public void initialize() {
        hashMapAndTaskListInitialization();
@@ -91,6 +93,7 @@ public class MainController {
         updateProgressBar(taskStatus);
     }
 
+    //кнопка открывающая статистику
     @FXML
     private void statisticsClickButton() {
         statisticsBox.setVisible(true);
@@ -98,6 +101,7 @@ public class MainController {
         statisticsButton.setVisible(false);
     }
 
+    //кнопка закрывающая статистику
     @FXML
     private void closeStatisticsClickButton() {
         statisticsBox.setVisible(false);
@@ -130,8 +134,8 @@ public class MainController {
     @FXML
     private void buttonClickShowDetails() {
         Task task = getTaskByDisplayName();
-        taskInformationLabel.setText(task.getDescription() + " награда: " + task.getReward());
         boxWithDetails.setVisible(true);
+        taskInformationLabel.setText(task.getDescription() + " награда: " + task.getReward());
         moreDetailsButton.setVisible(false);
     }
 
@@ -157,6 +161,7 @@ public class MainController {
     //добавляет количество поинтов в общее
     private void addReward(Task task) {
         totalAmountOfReward += task.getReward();
+        statisticsText.setText(String.valueOf(totalAmountOfReward));
     }
 
     //проверка на включенный Vbox с деталями задачи

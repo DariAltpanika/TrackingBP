@@ -36,7 +36,7 @@
             </font>
         </Label>
         <ListView id="listTask" fx:id="taskList" layoutX="35.0" layoutY="49.0" prefHeight="474.0" prefWidth="372.0" />
-        <ProgressBar id="progressBar" fx:id="progressBar" layoutX="451.0" layoutY="252.0" prefHeight="41.0" prefWidth="305.0" progress="0.0" />
+        <ProgressBar id="progressBar" fx:id="progressBar" layoutX="451.0" layoutY="252.0" prefHeight="41.0" prefWidth="305.0" progress="0.0" visible="false" />
         <Label fx:id="progressBarText" alignment="CENTER" layoutX="592.0" layoutY="263.0" text="0/0" visible="false">
             <font>
                 <Font size="14.0" />
@@ -47,12 +47,12 @@
                 <Font size="18.0" />
             </font>
         </Label>
-        <Button fx:id="completeEverythingButton" alignment="CENTER" layoutX="451.0" layoutY="319.0" mnemonicParsing="false" onAction="#everythingClickButton" prefHeight="57.0" prefWidth="142.0" text="выполнить все" wrapText="true">
+        <Button fx:id="completeEverythingButton" alignment="CENTER" layoutX="451.0" layoutY="319.0" mnemonicParsing="false" onAction="#everythingClickButton" prefHeight="57.0" prefWidth="142.0" text="выполнить все" visible="false" wrapText="true">
             <font>
                 <Font size="17.0" />
             </font>
         </Button>
-        <Button id="addOneButton" fx:id="setValueButton" alignment="CENTER" layoutX="613.0" layoutY="319.0" mnemonicParsing="false" onAction="#oneClickButton" prefHeight="57.0" prefWidth="142.0" text="Добавить +1">
+        <Button id="addOneButton" fx:id="setValueButton" alignment="CENTER" layoutX="613.0" layoutY="319.0" mnemonicParsing="false" onAction="#oneClickButton" prefHeight="57.0" prefWidth="142.0" text="Добавить +1" visible="false">
             <font>
                 <Font size="18.0" />
             </font>
