@@ -12,13 +12,30 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="567.0" prefWidth="798.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.bpcounter.controller.MainController">
     <children>
+        <Button fx:id="statisticsButton" alignment="CENTER" layoutX="701.0" layoutY="13.0" mnemonicParsing="false" onAction="#statisticsClickButton" text="Статистика" />
+        <VBox fx:id="statisticsBox" alignment="CENTER" layoutX="524.0" layoutY="15.0" prefHeight="68.0" prefWidth="159.0" spacing="10.0" style="-fx-background-color: #1a2a4f; -fx-background-radius: 30;" visible="false">
+            <children>
+                <Label fx:id="statisticsText" text="Статистика" textFill="WHITE">
+                    <font>
+                        <Font size="17.0" />
+                    </font>
+                </Label>
+                <Button fx:id="closeStatisticsButton" alignment="CENTER" mnemonicParsing="false" onAction="#closeStatisticsClickButton" prefHeight="24.0" prefWidth="71.0" text="Закрыть">
+                    <VBox.margin>
+                        <Insets />
+                    </VBox.margin>
+                    <font>
+                        <Font size="11.0" />
+                    </font>
+                </Button>
+            </children>
+        </VBox>
         <Label id="taskTitle" alignment="CENTER" layoutX="103.0" prefHeight="51.0" prefWidth="237.0" text="Список задач:">
             <font>
                 <Font size="35.0" />
             </font>
         </Label>
         <ListView id="listTask" fx:id="taskList" layoutX="35.0" layoutY="49.0" prefHeight="474.0" prefWidth="372.0" />
-        <Button alignment="CENTER" layoutX="420.0" layoutY="523.0" mnemonicParsing="false" text="Статистика" />
         <ProgressBar id="progressBar" fx:id="progressBar" layoutX="451.0" layoutY="252.0" prefHeight="41.0" prefWidth="305.0" progress="0.0" />
         <Label fx:id="progressBarText" alignment="CENTER" layoutX="592.0" layoutY="263.0" text="0/0" visible="false">
             <font>

@@ -10,11 +10,16 @@ import java.util.HashMap;
 public class MainController {
     private HashMap<Task, TaskStatus> taskMap = new HashMap<>();
     private String nameCurrentValue = "";
+    private int totalAmountOfReward = 0;
    @FXML private ListView<String> taskList;
    @FXML Label taskSelectionText;
    @FXML Label progressBarText;
   @FXML private ProgressBar progressBar;
- @FXML private Button completeEverythingButton;
+  @FXML private Button statisticsButton;
+  @FXML private VBox statisticsBox;
+  @FXML private Label statisticsText;
+  @FXML private Button closeStatisticsButton;
+    @FXML private Button completeEverythingButton;
     @FXML private Button setValueButton;
     @FXML private Button moreDetailsButton;
     @FXML private VBox boxWithDetails;
@@ -86,7 +91,20 @@ public class MainController {
         updateProgressBar(taskStatus);
     }
 
-    //метод обработки кнопки
+    @FXML
+    private void statisticsClickButton() {
+        statisticsBox.setVisible(true);
+        statisticsText.setText(String.valueOf(totalAmountOfReward));
+        statisticsButton.setVisible(false);
+    }
+
+    @FXML
+    private void closeStatisticsClickButton() {
+        statisticsBox.setVisible(false);
+        statisticsButton.setVisible(true);
+    }
+
+    //метод обработки кнопки +1
     @FXML
     private void oneClickButton() {
         TaskStatus taskStatus = taskMap.get(getTaskByDisplayName());
@@ -104,6 +122,7 @@ public class MainController {
         updateProgressBar(taskStatus);
         completeEverythingButton.setDisable(true);
         setValueButton.setDisable(true);
+        addReward(taskStatus.getTask());
         taskList.refresh();
     }
 
@@ -126,12 +145,18 @@ public class MainController {
     //настройка блокировки кнопки
     private void buttonLockSetting(TaskStatus taskStatus) {
         if (taskStatus.isTaskCompleted()) {
+            addReward(taskStatus.getTask());
             setValueButton.setDisable(true);
             completeEverythingButton.setDisable(true);
         } else {
             if (setValueButton.disableProperty().getValue()) setValueButton.setDisable(false);
             if (completeEverythingButton.disableProperty().getValue()) completeEverythingButton.setDisable(false);
         }
+    }
+
+    //добавляет количество поинтов в общее
+    private void addReward(Task task) {
+        totalAmountOfReward += task.getReward();
     }
 
     //проверка на включенный Vbox с деталями задачи
