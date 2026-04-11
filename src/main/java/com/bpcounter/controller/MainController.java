@@ -3,6 +3,7 @@ import com.bpcounter.model.Task;
 import com.bpcounter.model.TaskStatus;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.layout.VBox;
 
 import java.util.HashMap;
 
@@ -15,6 +16,10 @@ public class MainController {
   @FXML private ProgressBar progressBar;
  @FXML private Button completeEverythingButton;
     @FXML private Button setValueButton;
+    @FXML private Button moreDetailsButton;
+    @FXML private VBox boxWithDetails;
+    @FXML private Button hideButton;
+    @FXML Label taskInformationLabel;
 
     @FXML
     public void initialize() {
@@ -49,8 +54,9 @@ public class MainController {
         progressBar.setVisible(true);
 
         completeEverythingButton.setVisible(true);
-
         setValueButton.setVisible(true);
+        buttonShowDetailsSetting();
+        moreDetailsButton.setVisible(true);
 
         TaskStatus taskStatus = taskMap.get(getTaskByDisplayName());
         buttonLockSetting(taskStatus);
@@ -76,6 +82,22 @@ public class MainController {
         setValueButton.setDisable(true);
     }
 
+    //кнопка показать подробности
+    @FXML
+    private void buttonClickShowDetails() {
+        Task task = getTaskByDisplayName();
+        taskInformationLabel.setText(task.getDescription() + " награда: " + task.getReward());
+        boxWithDetails.setVisible(true);
+        moreDetailsButton.setVisible(false);
+    }
+
+    //кнопка скрыть подробности
+    @FXML
+    private void hideClickButton() {
+        boxWithDetails.setVisible(false);
+        moreDetailsButton.setVisible(true);
+    }
+
     //настройка блокировки кнопки
     private void buttonLockSetting(TaskStatus taskStatus) {
         if (taskStatus.isTaskCompleted()) {
@@ -84,6 +106,13 @@ public class MainController {
         } else {
             if (setValueButton.disableProperty().getValue()) setValueButton.setDisable(false);
             if (completeEverythingButton.disableProperty().getValue()) completeEverythingButton.setDisable(false);
+        }
+    }
+
+    //проверка на включенный Vbox с деталями задачи
+    private void buttonShowDetailsSetting() {
+        if (boxWithDetails.visibleProperty().getValue()) {
+            boxWithDetails.setVisible(false);
         }
     }
 
