@@ -1,13 +1,19 @@
 package com.bpcounter.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class TaskStatus {
     //задача
-    private final Task task;
+    private Task task;
     //количество сделаных действий
     private int currentCount = 0;
     private boolean completed = false;
 
-    public TaskStatus(Task task) {
+
+    //конструктор для Json
+    @JsonCreator
+    public TaskStatus(@JsonProperty("task") Task task) {
         this.task = task;
     }
 
@@ -37,9 +43,19 @@ public class TaskStatus {
         return completed;
     }
 
+    //установить значение Completed (для Json)
+    public void setCompleted(boolean completed) {
+        this.completed = completed;
+    }
+
     //получение количества сделаных действий (опционально)
     public int getCurrentCount() {
         return currentCount;
+    }
+
+    //установить значение currentCount (для Json)
+    public void setCurrentCount(int count) {
+        this.currentCount = count;
     }
 
     //сколько осталось сделать действий(опционально)
@@ -50,6 +66,11 @@ public class TaskStatus {
     //получение задачи
     public Task getTask() {
         return task;
+    }
+
+    //установить значение task (для Json)
+    public void setTask(Task task) {
+        this.task = task;
     }
 
     //сброс прогресса
