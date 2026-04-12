@@ -1,6 +1,7 @@
 package com.bpcounter.controller;
 import com.bpcounter.model.Task;
 import com.bpcounter.model.TaskStatus;
+import com.bpcounter.storage.TaskStorage;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
@@ -8,9 +9,12 @@ import javafx.scene.layout.VBox;
 import java.util.HashMap;
 
 public class MainController {
-    private HashMap<Task, TaskStatus> taskMap = new HashMap<>();
+    private HashMap<Task, TaskStatus> taskMap;
+    TaskStorage storage;
     private String nameCurrentValue = "";
     private int totalAmountOfReward = 0;
+
+
    @FXML private ListView<String> taskList;
    @FXML Label taskSelectionText;
    @FXML Label progressBarText;
@@ -30,16 +34,20 @@ public class MainController {
     //блок инициализации
     @FXML
     public void initialize() {
-       hashMapAndTaskListInitialization();
+        storage = new TaskStorage();
+        taskMap = (HashMap<Task, TaskStatus>) storage.load();
+        totalAmountOfReward = storage.getTotalReward();
+       taskListInitialization();
        setupSelectionListener();
+       taskList.refresh();
     }
 
     //инициализация taskMap
-    private void hashMapAndTaskListInitialization() {
+    private void taskListInitialization() {
+        taskList.getItems().clear();
         for (Task task : Task.values()) {
             String name = task.getDisplayName();
             taskList.getItems().add(name);
-            taskMap.put(task, new TaskStatus(task));
         }
         initializationCellFactory();
     }
@@ -114,8 +122,13 @@ public class MainController {
         TaskStatus taskStatus = taskMap.get(getTaskByDisplayName());
            taskStatus.addProgress(1);
            updateProgressBar(taskStatus);
+
+           if (taskStatus.isTaskCompleted()) {
+               addReward(taskStatus.getTask());
+           }
            buttonLockSetting(taskStatus);
         taskList.refresh();
+        storage.save(taskMap);
     }
 
     //метод обработки кнопки "добавить все"
@@ -128,6 +141,7 @@ public class MainController {
         setValueButton.setDisable(true);
         addReward(taskStatus.getTask());
         taskList.refresh();
+        storage.save(taskMap);
     }
 
     //кнопка показать подробности
@@ -146,10 +160,28 @@ public class MainController {
         moreDetailsButton.setVisible(true);
     }
 
+    //сброс прогресса
+    @FXML
+    private void resetClickButton() {
+        for (TaskStatus t : taskMap.values()) {
+            t.reset();
+        }
+        storage.save(taskMap);
+        totalAmountOfReward = 0;
+        statisticsText.setText(String.valueOf(totalAmountOfReward));
+
+        if (getTaskByDisplayName() != null) {
+            TaskStatus taskStatus = taskMap.get(getTaskByDisplayName());
+            buttonLockSetting(taskStatus);
+            updateProgressBar(taskStatus);
+        }
+
+        taskList.refresh();
+    }
+
     //настройка блокировки кнопки
     private void buttonLockSetting(TaskStatus taskStatus) {
         if (taskStatus.isTaskCompleted()) {
-            addReward(taskStatus.getTask());
             setValueButton.setDisable(true);
             completeEverythingButton.setDisable(true);
         } else {

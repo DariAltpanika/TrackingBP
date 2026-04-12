@@ -8,7 +8,7 @@ public class TaskStatus {
     private Task task;
     //количество сделаных действий
     private int currentCount = 0;
-    private boolean completed = false;
+    private boolean taskCompleted = false;
 
 
     //конструктор для Json
@@ -19,7 +19,7 @@ public class TaskStatus {
 
     //добавление прогресса
     public boolean addProgress(int count) {
-        if (completed || count <= 0) {
+        if (taskCompleted || count <= 0) {
             return false;
         }
         //защита от переполнения в случае если count больше чем task.getCount
@@ -31,8 +31,8 @@ public class TaskStatus {
     //проверка сделано ли достаточно действий для завершения, скрыта от пользователей
     private boolean checkForTaskCompletion() {
         //если флаг еще не true но currentCount >= task.getCount то присвоить значение флагу true и вернуть true, это нужно чтобы избежать дублирование
-        if (!completed && currentCount >= task.getCount()) {
-            completed = true;
+        if (!taskCompleted && currentCount >= task.getCount()) {
+            taskCompleted = true;
             return true;
         }
         return false;
@@ -40,12 +40,12 @@ public class TaskStatus {
 
     //пользовательский метод по получению информации о том, выполнена ли задача
     public boolean isTaskCompleted() {
-        return completed;
+        return taskCompleted;
     }
 
     //установить значение Completed (для Json)
     public void setCompleted(boolean completed) {
-        this.completed = completed;
+        this.taskCompleted = completed;
     }
 
     //получение количества сделаных действий (опционально)
@@ -76,6 +76,6 @@ public class TaskStatus {
     //сброс прогресса
     public void reset() {
         currentCount = 0;
-        completed = false;
+        taskCompleted = false;
     }
 }

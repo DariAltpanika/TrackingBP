@@ -3,6 +3,7 @@ package com.bpcounter.storage;
 import com.bpcounter.model.Task;
 import com.bpcounter.model.TaskStatus;
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
@@ -12,6 +13,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class TaskStorage {
+    //заработанные очки
+    private int totalReward = 0;
     //файл для хранения данных
     private static final String SAVE_FILE = "tasks_progress.json";
     // объект который сохраняет все в файл
@@ -21,6 +24,7 @@ public class TaskStorage {
     public TaskStorage() {
         this.mapper = new ObjectMapper();
         this.mapper.enable(SerializationFeature.INDENT_OUTPUT);
+        this.mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
     }
 
 
@@ -29,7 +33,7 @@ public class TaskStorage {
         File file = new File(SAVE_FILE);
         //если файла не существует
         if (!file.exists()) {
-            System.out.println("файл не найден");
+            System.out.println("won't find the file");
             //создаем новую map со значениями по умолчанию
             return initNewStatuses();
         }
@@ -38,22 +42,36 @@ public class TaskStorage {
             //читаем содержимое файла
             Map<Task, TaskStatus> loaded = mapper.readValue(file, new TypeReference<HashMap<Task, TaskStatus>>() {
             });
-            System.out.println("файл загружен");
+            System.out.println("file uploaded");
+
+            //подсчет количества заработанных бонусных очков
+            for (TaskStatus t : loaded.values()) {
+                if (t.isTaskCompleted()) {
+                    totalReward += t.getTask().getReward();
+                }
+            }
+
             return loaded;
         } catch (IOException e) {
-            System.out.println("Ошибка загрузки");
+            System.out.println("download error");
+            e.printStackTrace();
             return initNewStatuses();
         }
+
     }
 
     //сохраняем все в файл
     public void save(Map<Task, TaskStatus> taskStatusMap) {
         try {
             mapper.writeValue(new File(SAVE_FILE), taskStatusMap);
-            System.out.println("прогресс сохранен");
+            System.out.println("progress saved");
         } catch (IOException e) {
-            System.out.println("Ошибка сохранения");
+            System.out.println("save error");
         }
+    }
+
+    public int getTotalReward() {
+        return totalReward;
     }
 
     //инициализируем map значениями по умолчанию
