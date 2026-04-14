@@ -11,13 +11,13 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="567.0" prefWidth="798.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.bpcounter.controller.MainController">
     <children>
-        <Label id="taskTitle" alignment="CENTER" layoutX="103.0" prefHeight="51.0" prefWidth="237.0" text="Список задач:">
-            <font>
-                <Font size="35.0" />
-            </font>
-        </Label>
         <ListView id="listTask" fx:id="taskList" layoutX="35.0" layoutY="49.0" prefHeight="474.0" prefWidth="372.0" />
         <Button fx:id="resetButton" layoutX="186.0" layoutY="532.0" mnemonicParsing="false" onAction="#resetClickButton" prefHeight="25.0" prefWidth="71.0" text="сбросить" />
+        <Button fx:id="buttonResetProgress" alignment="CENTER" layoutX="617.0" layoutY="212.0" mnemonicParsing="false" onAction="#buttonClickResetProgress" prefHeight="25.0" prefWidth="134.0" text="сбросить прогресс" visible="false">
+            <font>
+                <Font size="13.0" />
+            </font>
+        </Button>
         <ProgressBar id="progressBar" fx:id="progressBar" layoutX="451.0" layoutY="252.0" prefHeight="41.0" prefWidth="305.0" progress="0.0" visible="false" />
         <Label fx:id="progressBarText" alignment="CENTER" layoutX="592.0" layoutY="263.0" text="0/0" visible="false">
             <font>
@@ -40,7 +40,7 @@
             </font>
         </Button>
         <Button fx:id="moreDetailsButton" alignment="CENTER" layoutX="563.0" layoutY="532.0" mnemonicParsing="false" onAction="#buttonClickShowDetails" text="Подробнее" visible="false" />
-        <VBox fx:id="boxWithDetails" alignment="CENTER" layoutX="451.0" layoutY="395.0" prefHeight="104.0" prefWidth="305.0" style="-fx-background-color: #1a2a4f; -fx-background-radius: 30;" visible="false">
+        <VBox fx:id="boxWithDetails" alignment="CENTER" layoutX="451.0" layoutY="395.0" prefHeight="104.0" prefWidth="305.0" styleClass="vbox-card" visible="false">
             <children>
                 <Label fx:id="taskInformationLabel" alignment="CENTER" maxWidth="200.0" text="Информация о задаче" textFill="WHITE" wrapText="true">
                     <font>

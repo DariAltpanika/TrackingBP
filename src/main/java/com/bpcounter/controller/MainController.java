@@ -7,17 +7,21 @@ import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class MainController {
     private HashMap<Task, TaskStatus> taskMap;
     TaskStorage storage;
     private String nameCurrentValue = "";
+    private boolean EMPTY = true;
 
 
    @FXML private ListView<String> taskList;
    @FXML Label taskSelectionText;
     @FXML Label progressBarText;
   @FXML private ProgressBar progressBar;
+  @FXML private Button resetButton;
+  @FXML private Button buttonResetProgress;
     @FXML private Button completeEverythingButton;
     @FXML private Button setValueButton;
     @FXML private Button moreDetailsButton;
@@ -31,6 +35,7 @@ public class MainController {
     public void initialize() {
         storage = new TaskStorage();
         taskMap = (HashMap<Task, TaskStatus>) storage.load();
+        buttonLockSetting(taskMap);
        taskListInitialization();
        setupSelectionListener();
        taskList.refresh();
@@ -69,7 +74,7 @@ public class MainController {
                 setText(item);
                 TaskStatus taskStatus = taskMap.get(getTaskByDisplayName(item));
                 if (taskStatus != null && taskStatus.isTaskCompleted()) {
-                    setStyle("-fx-background-color: #51cf66; -fx-text-fill: white;");
+                    setStyle("-fx-background-color: #3b7a4a");
                 } else {
                     setStyle("");
                 }
@@ -89,6 +94,7 @@ public class MainController {
         setValueButton.setVisible(true);
         buttonShowDetailsSetting();
         moreDetailsButton.setVisible(true);
+        buttonResetProgress.setVisible(true);
 
         TaskStatus taskStatus = taskMap.get(getTaskByDisplayName());
         buttonLockSetting(taskStatus);
@@ -103,6 +109,12 @@ public class MainController {
            updateProgressBar(taskStatus);
 
            buttonLockSetting(taskStatus);
+
+           if (EMPTY) {
+               resetButton.setDisable(false);
+               EMPTY = false;
+           }
+
         taskList.refresh();
         storage.save(taskMap);
     }
@@ -113,6 +125,12 @@ public class MainController {
         TaskStatus taskStatus = taskMap.get(getTaskByDisplayName());
         taskStatus.addProgress(taskStatus.getRemainingCount());
         updateProgressBar(taskStatus);
+
+        if (EMPTY) {
+            resetButton.setDisable(false);
+            EMPTY = false;
+        }
+
         completeEverythingButton.setDisable(true);
         setValueButton.setDisable(true);
         taskList.refresh();
@@ -148,7 +166,24 @@ public class MainController {
             updateProgressBar(taskStatus);
         }
 
+        EMPTY = true;
+        resetButton.setDisable(true);
+
         taskList.refresh();
+    }
+
+    //сброс прогресса определенной задачи
+    @FXML
+    private void buttonClickResetProgress() {
+        if (getTaskByDisplayName() != null) {
+            TaskStatus taskStatus = taskMap.get(getTaskByDisplayName());
+                taskStatus.reset();
+                buttonLockSetting(taskStatus);
+                updateProgressBar(taskStatus);
+                storage.save(taskMap);
+                taskList.refresh();
+                buttonLockSetting(taskMap);
+        }
     }
 
     //настройка блокировки кнопки
@@ -160,6 +195,25 @@ public class MainController {
             if (setValueButton.disableProperty().getValue()) setValueButton.setDisable(false);
             if (completeEverythingButton.disableProperty().getValue()) completeEverythingButton.setDisable(false);
         }
+
+        if (taskStatus.getCurrentCount() > 0) {
+            buttonResetProgress.setDisable(false);
+        } else {
+            buttonResetProgress.setDisable(true);
+        }
+    }
+
+    //настройка блокировки кнопки сброса вех задач
+    private void buttonLockSetting(Map<Task, TaskStatus> map) {
+        for (TaskStatus t : map.values()) {
+            if (t.getCurrentCount() > 0) {
+                EMPTY = false;
+                resetButton.setDisable(false);
+                return;
+            }
+        }
+        EMPTY = true;
+        resetButton.setDisable(true);
     }
 
     //проверка на включенный Vbox с деталями задачи

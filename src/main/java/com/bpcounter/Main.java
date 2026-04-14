@@ -20,6 +20,7 @@ public class Main extends Application {
 
         // 2. Создаем сцену
         Scene scene = new Scene(loader.load(), 800, 600);
+        scene.getStylesheets().add(getClass().getResource("/com/bpcounter/view/style.css").toExternalForm());
 
         // 3. Настраиваем окно
         primaryStage.setTitle("BPCounter");
