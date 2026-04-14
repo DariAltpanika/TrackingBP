@@ -14,7 +14,6 @@ import java.util.Map;
 
 public class TaskStorage {
     //заработанные очки
-    private int totalReward = 0;
     //файл для хранения данных
     private static final String SAVE_FILE = "tasks_progress.json";
     // объект который сохраняет все в файл
@@ -44,13 +43,6 @@ public class TaskStorage {
             });
             System.out.println("file uploaded");
 
-            //подсчет количества заработанных бонусных очков
-            for (TaskStatus t : loaded.values()) {
-                if (t.isTaskCompleted()) {
-                    totalReward += t.getTask().getReward();
-                }
-            }
-
             return loaded;
         } catch (IOException e) {
             System.out.println("download error");
@@ -68,10 +60,6 @@ public class TaskStorage {
         } catch (IOException e) {
             System.out.println("save error");
         }
-    }
-
-    public int getTotalReward() {
-        return totalReward;
     }
 
     //инициализируем map значениями по умолчанию

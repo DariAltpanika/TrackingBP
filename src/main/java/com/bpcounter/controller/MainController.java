@@ -12,17 +12,12 @@ public class MainController {
     private HashMap<Task, TaskStatus> taskMap;
     TaskStorage storage;
     private String nameCurrentValue = "";
-    private int totalAmountOfReward = 0;
 
 
    @FXML private ListView<String> taskList;
    @FXML Label taskSelectionText;
-   @FXML Label progressBarText;
+    @FXML Label progressBarText;
   @FXML private ProgressBar progressBar;
-  @FXML private Button statisticsButton;
-  @FXML private VBox statisticsBox;
-  @FXML private Label statisticsText;
-  @FXML private Button closeStatisticsButton;
     @FXML private Button completeEverythingButton;
     @FXML private Button setValueButton;
     @FXML private Button moreDetailsButton;
@@ -36,7 +31,6 @@ public class MainController {
     public void initialize() {
         storage = new TaskStorage();
         taskMap = (HashMap<Task, TaskStatus>) storage.load();
-        totalAmountOfReward = storage.getTotalReward();
        taskListInitialization();
        setupSelectionListener();
        taskList.refresh();
@@ -101,21 +95,6 @@ public class MainController {
         updateProgressBar(taskStatus);
     }
 
-    //кнопка открывающая статистику
-    @FXML
-    private void statisticsClickButton() {
-        statisticsBox.setVisible(true);
-        statisticsText.setText(String.valueOf(totalAmountOfReward));
-        statisticsButton.setVisible(false);
-    }
-
-    //кнопка закрывающая статистику
-    @FXML
-    private void closeStatisticsClickButton() {
-        statisticsBox.setVisible(false);
-        statisticsButton.setVisible(true);
-    }
-
     //метод обработки кнопки +1
     @FXML
     private void oneClickButton() {
@@ -123,9 +102,6 @@ public class MainController {
            taskStatus.addProgress(1);
            updateProgressBar(taskStatus);
 
-           if (taskStatus.isTaskCompleted()) {
-               addReward(taskStatus.getTask());
-           }
            buttonLockSetting(taskStatus);
         taskList.refresh();
         storage.save(taskMap);
@@ -139,7 +115,6 @@ public class MainController {
         updateProgressBar(taskStatus);
         completeEverythingButton.setDisable(true);
         setValueButton.setDisable(true);
-        addReward(taskStatus.getTask());
         taskList.refresh();
         storage.save(taskMap);
     }
@@ -149,7 +124,7 @@ public class MainController {
     private void buttonClickShowDetails() {
         Task task = getTaskByDisplayName();
         boxWithDetails.setVisible(true);
-        taskInformationLabel.setText(task.getDescription() + " награда: " + task.getReward());
+        taskInformationLabel.setText(task.getDescription() + " награда: " + task.getReward() + "/" + (task.getReward() * 2));
         moreDetailsButton.setVisible(false);
     }
 
@@ -167,9 +142,6 @@ public class MainController {
             t.reset();
         }
         storage.save(taskMap);
-        totalAmountOfReward = 0;
-        statisticsText.setText(String.valueOf(totalAmountOfReward));
-
         if (getTaskByDisplayName() != null) {
             TaskStatus taskStatus = taskMap.get(getTaskByDisplayName());
             buttonLockSetting(taskStatus);
@@ -188,12 +160,6 @@ public class MainController {
             if (setValueButton.disableProperty().getValue()) setValueButton.setDisable(false);
             if (completeEverythingButton.disableProperty().getValue()) completeEverythingButton.setDisable(false);
         }
-    }
-
-    //добавляет количество поинтов в общее
-    private void addReward(Task task) {
-        totalAmountOfReward += task.getReward();
-        statisticsText.setText(String.valueOf(totalAmountOfReward));
     }
 
     //проверка на включенный Vbox с деталями задачи
