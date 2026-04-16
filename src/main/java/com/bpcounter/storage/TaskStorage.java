@@ -9,15 +9,27 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 
 public class TaskStorage {
     //заработанные очки
     //файл для хранения данных
-    private static final String SAVE_FILE = "tasks_progress.json";
+    private static final String APP_DIR = System.getProperty("user.home") + File.separator + ".BPCounterFiles";
+    private static final String SAVE_FILE = APP_DIR + File.separator + "tasks_progress.json";
     // объект который сохраняет все в файл
     private final ObjectMapper mapper;
+
+    //создание папки для файла
+    static {
+        try {
+            Files.createDirectories(Paths.get(APP_DIR));
+        } catch (IOException e) {
+            System.err.println("Не удалось создать папку для данных: " + e.getMessage());
+        }
+    }
 
     //конструктор который создает mapper и форматирует данные в читабельный вид
     public TaskStorage() {
