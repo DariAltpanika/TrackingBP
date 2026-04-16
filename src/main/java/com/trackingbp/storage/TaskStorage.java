@@ -55,6 +55,11 @@ public class TaskStorage {
             });
             System.out.println("file uploaded");
 
+            for (Task task : Task.values()) {
+                if (!loaded.containsKey(task)) {
+                    loaded.put(task, new TaskStatus(task));
+                }
+            }
             return loaded;
         } catch (IOException e) {
             System.out.println("download error");

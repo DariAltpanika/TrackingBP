@@ -1,5 +1,4 @@
 {
-    "bin": {"BPCounter-1-0-SNAPSHOT-jar-with-dependencies": "jdeploy-bundle/jdeploy.js"},
     "author": "Yoolica",
     "description": "Отслеживайте выполнение заданий и получайте бонусные поинты. Контролируйте свой прогресс.",
     "main": "index.js",
@@ -18,7 +17,7 @@
         "jar": "target/TrackingBP-1.0-SNAPSHOT-jar-with-dependencies.jar",
         "javafx": true,
         "title": "TrackingBP",
-        "platformBundlesEnabled": false,
+        "platformBundlesEnabled": true,
         "downloadPage": {"platforms": ["default"]}
     },
     "publishTarget": "github",
