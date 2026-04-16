@@ -1,4 +1,4 @@
-package com.bpcounter.service;
+package com.trackingbp.service;
 
 public class TaskStatisticsService {
 }

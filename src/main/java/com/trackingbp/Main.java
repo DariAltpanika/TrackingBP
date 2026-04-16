@@ -1,11 +1,8 @@
-package com.bpcounter;
+package com.trackingbp;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
@@ -15,15 +12,15 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         // 1. Загружаем FXML файл
         FXMLLoader loader = new FXMLLoader(
-                getClass().getResource("/com/bpcounter/view/main-view.fxml")
+                getClass().getResource("/com/trackingbp/view/main-view.fxml")
         );
 
         // 2. Создаем сцену
         Scene scene = new Scene(loader.load(), 800, 600);
-        scene.getStylesheets().add(getClass().getResource("/com/bpcounter/view/style.css").toExternalForm());
+        scene.getStylesheets().add(getClass().getResource("/com/trackingbp/view/style.css").toExternalForm());
 
         // 3. Настраиваем окно
-        primaryStage.setTitle("BPCounter");
+        primaryStage.setTitle("TrackingBP");
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);
         primaryStage.setMaximized(false);

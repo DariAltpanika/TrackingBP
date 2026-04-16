@@ -1,7 +1,7 @@
-package com.bpcounter.storage;
+package com.trackingbp.storage;
 
-import com.bpcounter.model.Task;
-import com.bpcounter.model.TaskStatus;
+import com.trackingbp.model.Task;
+import com.trackingbp.model.TaskStatus;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -17,7 +17,7 @@ import java.util.Map;
 public class TaskStorage {
     //заработанные очки
     //файл для хранения данных
-    private static final String APP_DIR = System.getProperty("user.home") + File.separator + ".BPCounterFiles";
+    private static final String APP_DIR = System.getProperty("user.home") + File.separator + ".TrackingBPFiles";
     private static final String SAVE_FILE = APP_DIR + File.separator + "tasks_progress.json";
     // объект который сохраняет все в файл
     private final ObjectMapper mapper;

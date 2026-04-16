@@ -1,4 +1,4 @@
-package com.bpcounter.model;
+package com.trackingbp.model;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;

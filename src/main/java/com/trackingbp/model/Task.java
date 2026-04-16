@@ -1,4 +1,4 @@
-package com.bpcounter.model;
+package com.trackingbp.model;
 
 public enum Task {
     //все задачи
