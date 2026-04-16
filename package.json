@@ -1,28 +1,29 @@
 {
-  "bin": {"BPCounter-1-0-SNAPSHOT-jar-with-dependencies": "jdeploy-bundle/jdeploy.js"},
-  "author": "",
-  "description": "",
-  "main": "index.js",
-  "preferGlobal": true,
-  "repository": "",
-  "version": "1.0.0",
-  "jdeploy": {
-    "jdk": false,
-    "generateLegacyBundles": false,
-    "javaVersion": "21",
-    "jar": "target/BPCounter-1.0-SNAPSHOT-jar-with-dependencies.jar",
-    "javafx": true,
-    "title": "BPCounter 1 0 SNAPSHOT Jar With Dependencies"
-  },
-  "dependencies": {
-    "command-exists-promise": "^2.0.2",
-    "node-fetch": "2.6.7",
-    "tar": "^4.4.8",
-    "yauzl": "^2.10.0",
-    "shelljs": "^0.8.4"
-  },
-  "license": "ISC",
-  "name": "BPCounter-1-0-SNAPSHOT-jar-with-dependencies",
-  "files": ["jdeploy-bundle"],
-  "scripts": {"test": "echo \"Error: no test specified\" && exit 1"}
+    "license": "ISC",
+    "bin": {"BPCounter-1-0-SNAPSHOT-jar-with-dependencies": "jdeploy-bundle/jdeploy.js"},
+    "author": "Yoolica",
+    "name": "TrackingBP",
+    "files": ["jdeploy-bundle"],
+    "main": "index.js",
+    "preferGlobal": true,
+    "scripts": {"test": "echo \"Error: no test specified\" && exit 1"},
+    "version": "1.0.0",
+    "jdeploy": {
+        "fallbackToUniversal": false,
+        "generateLegacyBundles": false,
+        "publishTargets": [],
+        "javaVersion": "21",
+        "jar": "target/TrackingBP-1.0-SNAPSHOT-jar-with-dependencies.jar",
+        "javafx": true,
+        "title": "TrackingBP",
+        "platformBundlesEnabled": false,
+        "downloadPage": {"platforms": ["default"]}
+    },
+    "dependencies": {
+        "command-exists-promise": "^2.0.2",
+        "node-fetch": "2.6.7",
+        "tar": "^4.4.8",
+        "yauzl": "^2.10.0",
+        "shelljs": "^0.8.4"
+    }
 }

@@ -3,7 +3,10 @@ package com.trackingbp;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
+
+import java.io.InputStream;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
@@ -21,6 +24,9 @@ public class Main extends Application {
 
         // 3. Настраиваем окно
         primaryStage.setTitle("TrackingBP");
+
+        primaryStage.getIcons().add(new Image("/miniIcon.png"));
+
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);
         primaryStage.setMaximized(false);
