@@ -4,23 +4,14 @@
     "main": "index.js",
     "preferGlobal": true,
     "repository": {"url": "https://github.com/DariAltpanika/TrackingBP"},
-    "version": "1.1.0",
+    "version": "1.0.0",
     "jdeploy": {
-        "fallbackToUniversal": false,
-        "generateLegacyBundles": false,
-        "publishTargets": [{
-            "name": "github: github",
-            "type": "GITHUB",
-            "url": "https://github.com/DariAltpanika/TrackingBP"
-        }],
-        "javaVersion": "21",
         "jar": "target/TrackingBP-1.0-SNAPSHOT-jar-with-dependencies.jar",
+        "mainClass": "com.trackingbp.Main",
+        "javaVersion": "21",
         "javafx": true,
-        "title": "TrackingBP",
-        "platformBundlesEnabled": true,
-        "downloadPage": {"platforms": ["default"]}
+        "title": "TrackingBP"
     },
-    "publishTarget": "github",
     "dependencies": {
         "command-exists-promise": "^2.0.2",
         "node-fetch": "2.6.7",
