@@ -12,7 +12,7 @@
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1"
     },
-    "version": "1.0.1",
+    "version": "1.0.3",
     "jdeploy": {
         "fallbackToUniversal": false,
         "mainClass": "com.trackingbp.Main",
@@ -20,8 +20,9 @@
         "jar": "target/TrackingBP-1.0-SNAPSHOT-jar-with-dependencies.jar",
         "javafx": true,
         "title": "TrackingBP",
+        "icon": "icon.png",
         "checkForUpdates": false,
-        "minLauncherInitialAppVersion": "1.0.1",
+        "minLauncherInitialAppVersion": "1.0.3",
         "stripJavaFXFiles": true,
         "generateLegacyBundles": false,
         "publishTargets": [
