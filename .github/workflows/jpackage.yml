@@ -20,11 +20,6 @@ jobs:
       - name: Build with Maven
         run: mvn clean package -DskipTests
 
-      - name: Install WiX Toolset
-        run: |
-          choco install wixtoolset --version=3.11.2 -y
-          echo "C:\Program Files (x86)\WiX Toolset v3.11\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
-
       - name: List target directory (debug)
         run: dir target/
 
