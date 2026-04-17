@@ -6,23 +6,31 @@
     "files": ["jdeploy-bundle"],
     "main": "index.js",
     "preferGlobal": true,
-    "repository": {"url": "https://github.com/DariAltpanika/TrackingBP"},
-    "scripts": {"test": "echo \"Error: no test specified\" && exit 1"},
-    "version": "1.0.0",
+    "repository": {
+        "url": "https://github.com/DariAltpanika/TrackingBP"
+    },
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "version": "1.0.1",
     "jdeploy": {
         "fallbackToUniversal": false,
         "mainClass": "com.trackingbp.Main",
-        "publishTargets": [{
-            "name": "github: github",
-            "type": "GITHUB",
-            "url": "https://github.com/DariAltpanika/TrackingBP"
-        }],
         "javaVersion": "21",
         "jar": "target/TrackingBP-1.0-SNAPSHOT-jar-with-dependencies.jar",
         "javafx": true,
         "title": "TrackingBP",
-        "platformBundlesEnabled": false,
-        "downloadPage": {"platforms": ["default"]}
+        "checkForUpdates": false,
+        "minLauncherInitialAppVersion": "1.0.1",
+        "stripJavaFXFiles": true,
+        "generateLegacyBundles": false,
+        "publishTargets": [
+            {
+                "name": "github",
+                "type": "GITHUB",
+                "url": "https://github.com/DariAltpanika/TrackingBP"
+            }
+        ]
     },
     "dependencies": {
         "command-exists-promise": "^2.0.2",
