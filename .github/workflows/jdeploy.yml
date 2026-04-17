@@ -37,6 +37,4 @@ jobs:
         run: npm install -g jdeploy@6.1.1
 
       - name: Build App Installer Bundles
-        run: jdeploy publish
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
+        run: jdeploy publish --github-repo ${{ github.repository }} --github-token ${{ github.token }}
