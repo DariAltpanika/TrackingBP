@@ -5,10 +5,8 @@ name: jDeploy CI with Maven
 
 on:
   push:
-    branches:
-      - '*-snapshot'
-    tags:
-      - 'v*'
+    branches: [ 'main', '*-snapshot' ]
+    tags: [ 'v*' ]
 
 concurrency:
   group: jdeploy-release-${{ github.repository }}
@@ -21,17 +19,27 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
+      
       - name: Set up JDK 21
-        uses: actions/setup-java@v3
+        uses: actions/setup-java@v4
         with:
           java-version: '21'
           distribution: 'temurin'
           cache: maven
+          
       - name: Build with Maven
         run: mvn -B package --file pom.xml
-
-      - name: Build App Installer Bundles
-        uses: shannah/jdeploy@master
+        
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
-          github_token: ${{ github.token }}
+          node-version: '20'
+          
+      - name: Install jdeploy
+        run: npm install -g jdeploy@6.1.1
+        
+      - name: Build App Installer Bundles
+        run: jdeploy publish --target github
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
