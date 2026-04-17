@@ -1,0 +1,52 @@
+name: Build Windows Installer with jpackage
+
+on:
+  push:
+    tags: [ 'v*' ]
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+      - name: Build with Maven
+        run: mvn clean package -DskipTests
+
+      - name: Create Windows Installer with jpackage
+        run: |
+          jpackage `
+            --type exe `
+            --input target/ `
+            --main-jar TrackingBP-1.0-SNAPSHOT-jar-with-dependencies.jar `
+            --main-class com.trackingbp.Main `
+            --name TrackingBP `
+            --app-version ${{ github.ref_name }} `
+            --vendor "Yoolica" `
+            --description "TrackingBP" `
+            --win-dir-chooser `
+            --win-menu `
+            --win-shortcut `
+            --icon icon.png `
+            --dest dist/
+
+      - name: Upload Installer
+        uses: actions/upload-artifact@v4
+        with:
+          name: TrackingBP-Setup
+          path: dist/TrackingBP-${{ github.ref_name }}.exe
+
+      - name: Upload to GitHub Release
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          files: dist/TrackingBP-${{ github.ref_name }}.exe
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
