@@ -1,16 +1,28 @@
 {
+    "license": "ISC",
     "author": "Yoolica",
+    "name": "TrackingBP",
     "description": "Отслеживайте выполнение заданий и получайте бонусные поинты. Контролируйте свой прогресс.",
+    "files": ["jdeploy-bundle"],
     "main": "index.js",
     "preferGlobal": true,
     "repository": {"url": "https://github.com/DariAltpanika/TrackingBP"},
+    "scripts": {"test": "echo \"Error: no test specified\" && exit 1"},
     "version": "1.0.0",
     "jdeploy": {
-        "jar": "target/TrackingBP-1.0-SNAPSHOT-jar-with-dependencies.jar",
+        "fallbackToUniversal": false,
         "mainClass": "com.trackingbp.Main",
+        "publishTargets": [{
+            "name": "github: github",
+            "type": "GITHUB",
+            "url": "https://github.com/DariAltpanika/TrackingBP"
+        }],
         "javaVersion": "21",
+        "jar": "target/TrackingBP-1.0-SNAPSHOT-jar-with-dependencies.jar",
         "javafx": true,
-        "title": "TrackingBP"
+        "title": "TrackingBP",
+        "platformBundlesEnabled": false,
+        "downloadPage": {"platforms": ["default"]}
     },
     "dependencies": {
         "command-exists-promise": "^2.0.2",
@@ -18,9 +30,5 @@
         "tar": "^4.4.8",
         "yauzl": "^2.10.0",
         "shelljs": "^0.8.4"
-    },
-    "license": "ISC",
-    "name": "TrackingBP",
-    "files": ["jdeploy-bundle"],
-    "scripts": {"test": "echo \"Error: no test specified\" && exit 1"}
+    }
 }
