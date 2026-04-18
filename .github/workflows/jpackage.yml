@@ -1,63 +1,77 @@
-name: Build Windows Installer with jpackage
+name: Build Windows EXE
 
 on:
   push:
     tags: [ 'v*' ]
+  workflow_dispatch:
 
 jobs:
   build:
+    runs-on: windows-latest
     permissions:
       contents: write
-    runs-on: windows-latest
 
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up JDK 21
+      - name: Setup JDK 21
         uses: actions/setup-java@v4
         with:
-          java-version: '21'
           distribution: 'temurin'
+          java-version: '21'
 
       - name: Download JavaFX SDK
         run: |
-          Invoke-WebRequest -Uri "https://download2.gluonhq.com/openjfx/21.0.1/openjfx-21.0.1_windows-x64_bin-sdk.zip" -OutFile "javafx-sdk.zip"
-          Expand-Archive -Path javafx-sdk.zip -DestinationPath .
-          echo "JAVAFX_HOME=$((Get-Location).Path)\javafx-sdk-21.0.1" | Out-File -FilePath $env:GITHUB_ENV -Append
+          curl -L -o javafx-sdk.zip https://download2.gluonhq.com/openjfx/21.0.1/openjfx-21.0.1_windows-x64_bin-sdk.zip
+          unzip javafx-sdk.zip
+          echo "JAVAFX_HOME=$(pwd)/javafx-sdk-21.0.1" >> $env:GITHUB_ENV
 
-      - name: Build JAR using pom-github.xml
-        run: mvn -f pom-github.xml clean package
+      - name: Build Fat JAR
+        run: mvn -f pom-github.xml clean compile assembly:single
 
-      - name: Create Windows Installer
+      - name: Create EXE with embedded JavaFX
         run: |
-          $VERSION = "${{ github.ref_name }}".TrimStart('v')
+          mkdir output
           jpackage `
-            --type exe `
             --input target `
-            --main-jar TrackingBP-1.0.0.jar `
+            --main-jar TrackingBP-1.0.0-jar-with-dependencies.jar `
             --main-class com.trackingbp.Main `
-            --name TrackingBP `
-            --app-version $VERSION `
-            --vendor "Yoolica" `
-            --description "Blood Pressure Tracker" `
+            --name BloodPressureTracker `
+            --type app-image `
+            --dest output `
             --module-path "$env:JAVAFX_HOME\lib" `
             --add-modules javafx.controls,javafx.fxml `
-            --win-dir-chooser `
-            --win-menu `
-            --win-shortcut `
-            --dest dist/ `
             --verbose
 
-      - name: Upload Installer
-        uses: actions/upload-artifact@v4
-        with:
-          name: TrackingBP-Setup
-          path: dist/*.exe
+      - name: Verify EXE
+        run: |
+          if (Test-Path "output\BloodPressureTracker\BloodPressureTracker.exe") {
+            Write-Host "✅ EXE created successfully!" -ForegroundColor Green
+          } else {
+            Write-Host "❌ EXE not found!" -ForegroundColor Red
+            exit 1
+          }
 
-      - name: Upload to GitHub Release
+      - name: Upload as ZIP
+        run: |
+          Compress-Archive -Path output\BloodPressureTracker\* -DestinationPath BloodPressureTracker.zip
+
+      - name: Upload to Release
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
         with:
-          files: dist/*.exe
+          files: BloodPressureTracker.zip
+          name: "Blood Pressure Tracker ${{ github.ref_name }}"
+          body: |
+            ## Blood Pressure Tracker
+            
+            ### Installation:
+            1. Download BloodPressureTracker.zip
+            2. Extract to any folder
+            3. Run BloodPressureTracker.exe
+            
+            ### Requirements:
+            - Windows 10 or 11
+            - No Java installation required!
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

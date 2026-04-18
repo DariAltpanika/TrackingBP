@@ -46,57 +46,40 @@
                 </configuration>
             </plugin>
 
-            <!-- Плагин для ЗАПУСКА (через mvn javafx:run) -->
+            <!-- Для запуска через mvn exec:java -->
             <plugin>
-                <groupId>org.openjfx</groupId>
-                <artifactId>javafx-maven-plugin</artifactId>
-                <version>0.0.8</version>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.1.0</version>
                 <configuration>
                     <mainClass>${mainClass}</mainClass>
-                    <executable>C:\Users\Daria\.jdks\corretto-21.0.4\bin\java.exe</executable>
                 </configuration>
             </plugin>
 
-            <!-- Плагин для СБОРКИ (jlink) -->
+            <!-- Для сборки fat JAR -->
             <plugin>
-                <groupId>org.openjfx</groupId>
-                <artifactId>javafx-maven-plugin</artifactId>
-                <version>0.0.8</version>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>3.6.0</version>
+                <configuration>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                    <archive>
+                        <manifest>
+                            <mainClass>${mainClass}</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
                 <executions>
                     <execution>
-                        <id>jlink</id>
-                        <goals>
-                            <goal>jlink</goal>
-                        </goals>
+                        <id>make-assembly</id>
                         <phase>package</phase>
-                        <configuration>
-                            <launcher>TrackingBP</launcher>
-                            <jlinkImageName>TrackingBP</jlinkImageName>
-                            <mainClass>${mainClass}</mainClass>
-                            <compress>2</compress>
-                            <noHeaderFiles>true</noHeaderFiles>
-                            <noManPages>true</noManPages>
-                            <stripDebug>true</stripDebug>
-                        </configuration>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
                     </execution>
                 </executions>
-            </plugin>
-
-            <!-- Плагин для создания .exe установщика (JPACKAGE) -->
-            <plugin>
-                <groupId>org.panteleyev</groupId>
-                <artifactId>jpackage-maven-plugin</artifactId>
-                <version>1.6.5</version>
-                <configuration>
-                    <name>TrackingBP</name>
-                    <appVersion>1.0.0</appVersion>
-                    <vendor>YourName</vendor>
-                    <mainClass>${mainClass}</mainClass>
-                    <runtimeImage>${project.build.directory}/TrackingBP</runtimeImage>
-                    <type>exe</type>
-                    <winMenu>true</winMenu>
-                    <winShortcut>true</winShortcut>
-                </configuration>
             </plugin>
         </plugins>
     </build>
