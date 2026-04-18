@@ -2,7 +2,7 @@ name: Build Windows EXE
 
 on:
   push:
-    tags: [ 'v*' ]
+    branches: [ main ]
   workflow_dispatch:
 
 jobs:
@@ -24,7 +24,7 @@ jobs:
       - name: Build Fat JAR
         run: mvn -f pom-github.xml clean compile assembly:single
 
-      - name: Create EXE Installer
+      - name: Create EXE
         run: |
           jpackage `
             --input target `
@@ -32,31 +32,10 @@ jobs:
             --main-class com.trackingbp.Main `
             --name BloodPressureTracker `
             --type exe `
-            --dest installer `
-            --verbose
+            --dest installer
 
-      - name: Upload EXE as Artifact
+      - name: Upload EXE
         uses: actions/upload-artifact@v4
         with:
-          name: BloodPressureTracker-Setup
+          name: BloodPressureTracker
           path: installer/*.exe
-
-      - name: Upload to GitHub Release
-        uses: softprops/action-gh-release@v1
-        if: startsWith(github.ref, 'refs/tags/')
-        with:
-          files: installer/*.exe
-          name: "Blood Pressure Tracker ${{ github.ref_name }}"
-          body: |
-            ## Blood Pressure Tracker
-            
-            ### Installation:
-            1. Download BloodPressureTracker.exe
-            2. Run the installer
-            3. Launch from Start Menu
-            
-            ### Requirements:
-            - Windows 10/11
-            - No Java installation required!
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
