@@ -34,13 +34,6 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) {
-        try {
             launch(args);
-        } catch (Throwable t) {
-            t.printStackTrace();
-            System.out.println("Нажмите Enter для выхода...");
-            new java.util.Scanner(System.in).nextLine();
-        }
-
     }
 }

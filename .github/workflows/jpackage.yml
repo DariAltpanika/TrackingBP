@@ -19,31 +19,39 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
 
-      - name: Build with Maven
-        run: mvn clean package -DskipTests
+      - name: Download JavaFX SDK
+        run: |
+          Invoke-WebRequest -Uri "https://download2.gluonhq.com/openjfx/21.0.1/openjfx-21.0.1_windows-x64_bin-sdk.zip" -OutFile "javafx-sdk.zip"
+          Expand-Archive -Path javafx-sdk.zip -DestinationPath .
+          echo "JAVAFX_HOME=$((Get-Location).Path)\javafx-sdk-21.0.1" | Out-File -FilePath $env:GITHUB_ENV -Append
 
-      - name: Create Windows Installer with jpackage
+      - name: Install WiX Toolset
+        run: |
+          choco install wixtoolset --version=3.14.0 -y
+          echo "C:\Program Files (x86)\WiX Toolset v3.14\bin" | Out-File -FilePath $env:GITHUB_PATH -Append -Encoding utf8
+
+      - name: Build JAR
+        run: mvn -f pom-github.xml clean package
+
+      - name: Create Windows Installer
         run: |
           $VERSION = "${{ github.ref_name }}".TrimStart('v')
           jpackage `
             --type exe `
-            --input target/ `
-            --main-jar TrackingBP-1.0-SNAPSHOT-jar-with-dependencies.jar `
+            --input target `
+            --main-jar TrackingBP-1.0.0.jar `
             --main-class com.trackingbp.Main `
             --name TrackingBP `
             --app-version $VERSION `
             --vendor "Yoolica" `
-            --description "TrackingBP" `
+            --description "Blood Pressure Tracker" `
+            --module-path "$env:JAVAFX_HOME\lib" `
+            --add-modules javafx.controls,javafx.fxml `
             --win-dir-chooser `
             --win-menu `
             --win-shortcut `
-            --icon icon.ico `
-            --win-console `
             --dest dist/ `
             --verbose
-
-      - name: List dist folder (debug)
-        run: dir dist/
 
       - name: Upload Installer
         uses: actions/upload-artifact@v4
