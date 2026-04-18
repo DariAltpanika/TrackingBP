@@ -1,4 +1,4 @@
-# TrackingBP - Blood Pressure Tracker
+# TrackingBP
 
 ## Установка и запуск
 
