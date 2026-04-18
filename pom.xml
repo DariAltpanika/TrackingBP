@@ -40,23 +40,21 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.11.0</version>
-                <configuration>
-                    <source>21</source>
-                    <target>21</target>
-                </configuration>
             </plugin>
 
-            <!-- Для запуска через mvn exec:java -->
             <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>exec-maven-plugin</artifactId>
-                <version>3.1.0</version>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.3.0</version>
                 <configuration>
-                    <mainClass>${mainClass}</mainClass>
+                    <archive>
+                        <manifest>
+                            <mainClass>com.trackingbp.Main</mainClass>
+                        </manifest>
+                    </archive>
                 </configuration>
             </plugin>
 
-            <!-- Для сборки fat JAR -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
@@ -67,7 +65,7 @@
                     </descriptorRefs>
                     <archive>
                         <manifest>
-                            <mainClass>${mainClass}</mainClass>
+                            <mainClass>com.trackingbp.Main</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
@@ -80,6 +78,15 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.1.0</version>
+                <configuration>
+                    <mainClass>com.trackingbp.Main</mainClass>
+                </configuration>
             </plugin>
         </plugins>
     </build>
