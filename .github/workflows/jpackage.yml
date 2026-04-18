@@ -25,12 +25,7 @@ jobs:
           Expand-Archive -Path javafx-sdk.zip -DestinationPath .
           echo "JAVAFX_HOME=$((Get-Location).Path)\javafx-sdk-21.0.1" | Out-File -FilePath $env:GITHUB_ENV -Append
 
-      - name: Install WiX Toolset
-        run: |
-          choco install wixtoolset --version=3.14.0 -y
-          echo "C:\Program Files (x86)\WiX Toolset v3.14\bin" | Out-File -FilePath $env:GITHUB_PATH -Append -Encoding utf8
-
-      - name: Build JAR
+      - name: Build JAR using pom-github.xml
         run: mvn -f pom-github.xml clean package
 
       - name: Create Windows Installer
