@@ -32,7 +32,7 @@ public class Main extends Application {
         }
 
         // 4. Настройки окна
-        primaryStage.setTitle("TrackingBP");
+        primaryStage.setTitle("TrackingBP v1.0.21");
 
         // 5. Загружаем иконку
         InputStream iconStream = getClass().getResourceAsStream("/miniIcon.png");
