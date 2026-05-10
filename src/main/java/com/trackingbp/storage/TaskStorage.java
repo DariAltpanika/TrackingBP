@@ -12,13 +12,17 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 public class TaskStorage {
-    //заработанные очки
     //файл для хранения данных
     private static final String APP_DIR = System.getProperty("user.home") + File.separator + ".TrackingBPFiles";
+    //файл прогресса
     private static final String SAVE_FILE = APP_DIR + File.separator + "tasks_progress.json";
+    //файл настроек видимости
+    private static final String SAVE_SETTINGS_FILE = APP_DIR + File.separator + "hidden_settings.json";
     // объект который сохраняет все в файл
     private final ObjectMapper mapper;
 
@@ -77,6 +81,53 @@ public class TaskStorage {
         } catch (IOException e) {
             System.out.println("save error");
         }
+    }
+
+    //сохранение всех скрытых задач в файл
+    public void saveHiddenSettings(Set<String> hiddenTasks) {
+        try {
+            mapper.writeValue(new File(SAVE_SETTINGS_FILE), hiddenTasks);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    //добавление одной задачи в сет со скрытыми файлами и обновление json
+    public void addToHidden(String taskName) {
+        Set<String> hidden = loadHiddenSettings();
+        if (hidden.add(taskName)) {
+            saveHiddenSettings(hidden);
+        }
+    }
+
+    //удаление одной задачи из сета и обновление файла json
+    public void removeFromHidden(String taskName) {
+        Set<String> hidden = loadHiddenSettings();
+        if (hidden.remove(taskName)) {
+            saveHiddenSettings(hidden);
+        }
+    }
+
+    //загрузка задач из файла json
+    public Set<String> loadHiddenSettings() {
+        File file = new File(SAVE_SETTINGS_FILE);
+
+        if (!file.exists()) {
+            return new HashSet<>();
+        }
+
+        try {
+            Set<String> loaded = mapper.readValue(file, new TypeReference<Set<String>>() {});
+            return loaded;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return new HashSet<>();
+        }
+    }
+
+    //сброс всех настроек
+    public void factoryReset() {
+        saveHiddenSettings(new HashSet<>());
     }
 
     //инициализируем map значениями по умолчанию

@@ -1,5 +1,5 @@
 .root {
--fx-background-color: linear-gradient(to bottom, #3a3d44, #18191c);
+    -fx-background-color: linear-gradient(to bottom, #3a3d44, #18191c);
 }
 
 .label, .text {
@@ -11,14 +11,15 @@
     -fx-text-fill: #e0e0e0;
     -fx-background-radius: 20;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 5, 0, 0, 1);
-     -fx-transition: all 0.2s ease-out;
+    -fx-transition: all 0.2s ease-out;
 }
+
 .button:hover {
     -fx-background-color: #3a3e48;
     -fx-text-fill: white;
-     -fx-scale-x: 1.05;
-        -fx-scale-y: 1.05;
-        -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.5), 10, 0, 0, 2);
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.5), 10, 0, 0, 2);
 }
 
 .button:pressed {
@@ -35,7 +36,7 @@
     -fx-padding: 2;
 }
 
-/* Контейнер ячеек (фон, когда нет ячеек) */
+/* Контейнер ячеек */
 .list-view .list-cell {
     -fx-background-color: #202328;
     -fx-text-fill: #e0e0e0;
@@ -49,36 +50,38 @@
     -fx-text-fill: white;
 }
 
-/* Выделенная ячейка (фокус) */
+/* Выделенная ячейка для ГЛАВНОГО списка */
 .list-view .list-cell:filled:selected,
 .list-view .list-cell:filled:selected:focused {
     -fx-background-color: #3a6ea5;
     -fx-text-fill: white;
 }
 
-/* Если список не в фокусе, выделение бледнее */
 .list-view .list-cell:filled:selected {
     -fx-background-color: #2c4d6e;
     -fx-text-fill: #e0e0e0;
 }
 
-/* Полоса прокрутки (чтобы тоже была тёмной) */
+/* Полоса прокрутки */
 .list-view .scroll-bar:vertical {
     -fx-background-color: #18191c;
     -fx-background-radius: 5;
 }
+
 .list-view .scroll-bar:vertical .thumb {
     -fx-background-color: #3a3e48;
     -fx-background-radius: 5;
 }
+
 .list-view .scroll-bar:vertical .thumb:hover {
     -fx-background-color: #4a4e59;
 }
+
 .list-view .scroll-bar:vertical .track {
     -fx-background-color: #202328;
 }
 
-/* Основной контейнер ProgressBar */
+/* ProgressBar */
 .progress-bar {
     -fx-background-color: #202328;
     -fx-background-radius: 12;
@@ -88,14 +91,12 @@
     -fx-border-width: 1;
 }
 
-/* Трек (пустая часть) */
 .progress-bar .track {
     -fx-background-color: #18191c;
     -fx-background-radius: 10;
     -fx-background-insets: 0;
 }
 
-/* Заливка прогресса (сама полоса) */
 .progress-bar .bar {
     -fx-background-color: linear-gradient(to right, #4a6a8a, #5c7e9e);
     -fx-background-radius: 10;
@@ -103,7 +104,6 @@
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 2, 0, 0, 0);
 }
 
-/* Если нужно изменить цвет для индетерминированного состояния (бесконечная анимация) */
 .progress-bar:indeterminate .bar {
     -fx-background-color: linear-gradient(to right, #5c7e9e, #3a6ea5);
 }
@@ -114,3 +114,160 @@
     -fx-padding: 8;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 10, 0, 0, 2);
 }
+
+/* TabPane */
+.tab-pane {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+}
+
+.tab-pane .tab-header-area {
+    -fx-padding: 5 0 0 10;
+    -fx-background-color: transparent;
+}
+
+.tab-pane .tab-header-background {
+    -fx-background-color: transparent;
+}
+
+.tab-pane .tab-header-area .headers-region {
+    -fx-spacing: 15;
+}
+
+.tab-pane .tab {
+    -fx-background-color: #2c2f36;
+    -fx-background-radius: 20;
+    -fx-padding: 6 25 6 25;
+    -fx-cursor: hand;
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+}
+
+.tab-pane .tab:hover {
+    -fx-background-color: #3a3e48;
+}
+
+.tab-pane .tab:selected {
+    -fx-background-color: #3a6ea5;
+}
+
+.tab-pane .tab:focused,
+.tab-pane .tab:selected:focused {
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+}
+
+.tab-pane .tab .focus-indicator {
+    -fx-border-color: transparent;
+}
+
+.tab-pane .tab .tab-label {
+    -fx-text-fill: #e0e0e0;
+    -fx-font-size: 13px;
+}
+
+.tab-pane .tab:selected .tab-label {
+    -fx-text-fill: white;
+}
+
+.tab-pane .tab:hover .tab-label {
+    -fx-text-fill: white;
+}
+
+.tab-pane .tab-content-area {
+    -fx-background-color: transparent;
+}
+
+/* ==================== СТИЛЬ ДЛЯ СПИСКА НАСТРОЕК (скрытые задачи) ==================== */
+#hiddenTaskList {
+    -fx-background-color: #202328;
+    -fx-border-color: #3a3e48;
+    -fx-border-radius: 12;
+    -fx-background-radius: 12;
+    -fx-padding: 5;
+}
+
+/* Отключаем возможность выбора строк */
+#hiddenTaskList .list-cell {
+    -fx-background-color: transparent;
+    -fx-text-fill: #e0e0e0;
+    -fx-padding: 10 15 10 15;
+    -fx-font-size: 14px;
+    -fx-border-width: 0;
+}
+
+/* Разделители между строками */
+#hiddenTaskList .list-cell:not(:last-child) {
+    -fx-border-color: #3a3e48;
+    -fx-border-width: 0 0 1 0;
+}
+
+/* Убираем эффект наведения и нажатия */
+#hiddenTaskList .list-cell:hover,
+#hiddenTaskList .list-cell:pressed,
+#hiddenTaskList .list-cell:selected,
+#hiddenTaskList .list-cell:focused {
+    -fx-background-color: transparent !important;
+    -fx-text-fill: #e0e0e0 !important;
+}
+
+/* Стиль для чекбоксов */
+#hiddenTaskList .check-box {
+    -fx-cursor: hand;
+}
+
+#hiddenTaskList .check-box .box {
+    -fx-background-color: #2c2f36;
+    -fx-border-color: #3a3e48;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
+    -fx-padding: 3;
+}
+
+#hiddenTaskList .check-box:selected .box {
+    -fx-background-color: #3a6ea5;
+    -fx-border-color: #5c7e9e;
+}
+
+#hiddenTaskList .check-box:selected .mark {
+    -fx-background-color: #e0e0e0;
+}
+
+#hiddenTaskList .check-box:hover .box {
+    -fx-background-color: #3a3e48;
+    -fx-border-color: #5c7e9e;
+}
+
+#hiddenTaskList .check-box .text {
+    -fx-text-fill: #e0e0e0;
+    -fx-font-size: 14px;
+}
+
+/* Полоса прокрутки */
+#hiddenTaskList .scroll-bar:vertical {
+    -fx-background-color: #18191c;
+    -fx-background-radius: 5;
+    -fx-pref-width: 8;
+}
+
+#hiddenTaskList .scroll-bar:vertical .thumb {
+    -fx-background-color: #3a3e48;
+    -fx-background-radius: 5;
+}
+
+#hiddenTaskList .scroll-bar:vertical .thumb:hover {
+    -fx-background-color: #4a4e59;
+}
+
+#hiddenTaskList .scroll-bar:vertical .track {
+    -fx-background-color: #202328;
+}
+
+/* Убираем фокус */
+#hiddenTaskList:focused {
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+}
+

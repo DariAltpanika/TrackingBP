@@ -2,21 +2,26 @@ package com.trackingbp.controller;
 import com.trackingbp.model.Task;
 import com.trackingbp.model.TaskStatus;
 import com.trackingbp.storage.TaskStorage;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 public class MainController {
     private HashMap<Task, TaskStatus> taskMap;
+    private Set<String> hiddenTasks;
     TaskStorage storage;
     private String nameCurrentValue = "";
     private boolean EMPTY = true;
 
 
    @FXML private ListView<String> taskList;
+   @FXML private ListView<String> hiddenTaskList;
    @FXML Label taskSelectionText;
     @FXML Label progressBarText;
   @FXML private ProgressBar progressBar;
@@ -35,18 +40,24 @@ public class MainController {
     public void initialize() {
         storage = new TaskStorage();
         taskMap = (HashMap<Task, TaskStatus>) storage.load();
+        hiddenTasks = storage.loadHiddenSettings();
         buttonLockSetting(taskMap);
-       taskListInitialization();
+       taskListInitialization(hiddenTasks);
        setupSelectionListener();
+       setupHiddenTasksList(hiddenTasks);
+
        taskList.refresh();
     }
 
     //инициализация taskMap
-    private void taskListInitialization() {
+    private void taskListInitialization(Set<String> hiddenTask) {
         taskList.getItems().clear();
         for (Task task : Task.values()) {
-            String name = task.getDisplayName();
-            taskList.getItems().add(name);
+                String name = task.getDisplayName();
+                if (hiddenTask.contains(name)) {
+                    continue;
+                }
+                taskList.getItems().add(name);
         }
         initializationCellFactory();
     }
@@ -56,6 +67,56 @@ public class MainController {
         taskList.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
             if (newVal != null) {
                 onTaskSelected(newVal);
+            }
+        });
+    }
+
+    private void setupHiddenTasksList(Set<String> hiddenTask) {
+        hiddenTaskList.setSelectionModel(null);
+        hiddenTaskList.getItems().clear();
+
+        for (Task task : Task.values()) {
+            hiddenTaskList.getItems().add(task.getDisplayName());
+        }
+
+        hiddenTaskList.setCellFactory(param -> new ListCell<String>() {
+            @Override
+            protected void updateItem(String taskName, boolean empty) {
+                super.updateItem(taskName, empty);
+
+                if (empty || taskName == null) {
+                    setText(null);
+                    setGraphic(null);
+                } else {
+                    HBox hBox = new HBox(10);
+
+
+                    CheckBox checkBox = new CheckBox();
+
+
+                    Label label = new Label(taskName);
+
+
+                    checkBox.setSelected(hiddenTask.contains(taskName));
+
+                    checkBox.selectedProperty().addListener((obs, oldValue, isSelected) -> {
+                        if (isSelected) {
+                            storage.addToHidden(taskName);
+                            hiddenTask.add(taskName);
+                            taskList.getItems().remove(taskName);
+                        } else {
+                            storage.removeFromHidden(taskName);
+                            hiddenTask.remove(taskName);
+
+                            if (!taskList.getItems().contains(taskName)) {
+                                taskList.getItems().add(taskName);
+                                FXCollections.sort(taskList.getItems());
+                            }
+                        }
+                    });
+                    hBox.getChildren().addAll(checkBox, label);
+                    setGraphic(hBox);
+                }
             }
         });
     }

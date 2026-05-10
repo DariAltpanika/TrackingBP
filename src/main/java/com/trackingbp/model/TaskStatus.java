@@ -8,7 +8,8 @@ public class TaskStatus {
     private Task task;
     //количество сделаных действий
     private int currentCount = 0;
-    private boolean taskCompleted = false;
+    private boolean hidden = false;
+    private transient boolean taskCompleted = false;
 
 
     //конструктор для Json
@@ -43,9 +44,19 @@ public class TaskStatus {
         return taskCompleted;
     }
 
+    //пользовательский метод по получению информации о том, скрыта ли задача
+    public boolean isHidden() {
+        return hidden;
+    }
+
     //установить значение Completed (для Json)
     public void setCompleted(boolean completed) {
         this.taskCompleted = completed;
+    }
+
+    //установить значение hidden
+    public void setHidden(boolean hidden) {
+        this.hidden = hidden;
     }
 
     //получение количества сделаных действий (опционально)
