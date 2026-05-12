@@ -2,11 +2,13 @@ package com.trackingbp.controller;
 import com.trackingbp.model.Task;
 import com.trackingbp.model.TaskStatus;
 import com.trackingbp.storage.TaskStorage;
+import javafx.animation.*;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.util.Duration;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -71,6 +73,7 @@ public class MainController {
         });
     }
 
+    //инициализация скрытых задач
     private void setupHiddenTasksList(Set<String> hiddenTask) {
         hiddenTaskList.setSelectionModel(null);
         hiddenTaskList.getItems().clear();
@@ -135,7 +138,14 @@ public class MainController {
                 setText(item);
                 TaskStatus taskStatus = taskMap.get(getTaskByDisplayName(item));
                 if (taskStatus != null && taskStatus.isTaskCompleted()) {
-                    setStyle("-fx-background-color: #3b7a4a");
+                    setStyle(
+                            "-fx-background-color: linear-gradient(to right, rgba(45, 106, 79, 0.4), rgba(82, 183, 136, 0.2));" +
+                                    "-fx-border-color: #52b788;" +
+                                    "-fx-border-width: 0 0 0 3px;" +
+                                    "-fx-background-radius: 12px;" +
+                                    "-fx-text-fill: white;" +
+                                    "-fx-effect: dropshadow(gaussian, #52b788, 5, 0, 0, 0);"
+                    );
                 } else {
                     setStyle("");
                 }

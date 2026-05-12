@@ -8,8 +8,8 @@ public class TaskStatus {
     private Task task;
     //количество сделаных действий
     private int currentCount = 0;
-    private boolean hidden = false;
-    private transient boolean taskCompleted = false;
+    private transient boolean hidden = false;
+    private boolean taskCompleted = false;
 
 
     //конструктор для Json
