@@ -2,9 +2,12 @@ package com.trackingbp;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.io.InputStream;
 import java.net.URL;
@@ -21,9 +24,13 @@ public class Main extends Application {
             return;
         }
         FXMLLoader loader = new FXMLLoader(fxmlUrl);
+        Parent root = loader.load();
+
+        primaryStage.initStyle(StageStyle.TRANSPARENT);
 
         // 2. Создаем сцену
-        Scene scene = new Scene(loader.load(), 800, 600);
+        Scene scene = new Scene(root, 800, 600);
+        scene.setFill(Color.TRANSPARENT);
 
         // 3. Загружаем CSS
         URL cssUrl = getClass().getResource("/com/trackingbp/view/style.css");
@@ -33,6 +40,8 @@ public class Main extends Application {
 
         // 4. Настройки окна
         primaryStage.setTitle("TrackingBP v1.1.21");
+
+        //тест
 
         // 5. Загружаем иконку
         InputStream iconStream = getClass().getResourceAsStream("/miniIcon.png");

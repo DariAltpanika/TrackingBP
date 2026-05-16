@@ -1,4 +1,5 @@
 package com.trackingbp.controller;
+import com.trackingbp.animation.Animations;
 import com.trackingbp.model.Task;
 import com.trackingbp.model.TaskStatus;
 import com.trackingbp.storage.TaskStorage;
@@ -8,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.util.HashMap;
@@ -20,8 +22,11 @@ public class MainController {
     TaskStorage storage;
     private String nameCurrentValue = "";
     private boolean EMPTY = true;
+    private double xOffset = 0;
+    private double yOffset = 0;
 
 
+    @FXML private HBox titleBar;
    @FXML private ListView<String> taskList;
    @FXML private ListView<String> hiddenTaskList;
    @FXML Label taskSelectionText;
@@ -29,6 +34,8 @@ public class MainController {
   @FXML private ProgressBar progressBar;
   @FXML private Button resetButton;
   @FXML private Button buttonResetProgress;
+  @FXML private Button closeButton;
+  @FXML private Button minimizeButton;
     @FXML private Button completeEverythingButton;
     @FXML private Button setValueButton;
     @FXML private Button moreDetailsButton;
@@ -47,6 +54,7 @@ public class MainController {
        taskListInitialization(hiddenTasks);
        setupSelectionListener();
        setupHiddenTasksList(hiddenTasks);
+       setupWindowDragging();
 
        taskList.refresh();
     }
@@ -153,6 +161,36 @@ public class MainController {
         });
     }
 
+    //Метод для закрытия окна
+    @FXML
+    private void handleClose() {
+        Stage stage = (Stage) closeButton.getScene().getWindow();
+        stage.close();
+    }
+    //Метод для сворачивания окна
+    @FXML
+    private void handleMinimize() {
+        Stage stage = (Stage) minimizeButton.getScene().getWindow();
+        stage.setIconified(true);
+    }
+
+    //метод слушатель движения окна
+    private void setupWindowDragging() {
+        if (titleBar != null) {
+            titleBar.setOnMousePressed(mouseEvent -> {
+                Stage stage = (Stage) titleBar.getScene().getWindow();
+                xOffset = stage.getX() - mouseEvent.getScreenX();
+                yOffset = stage.getY() - mouseEvent.getScreenY();
+            });
+
+            titleBar.setOnMouseDragged(mouseEvent -> {
+                Stage stage = (Stage) titleBar.getScene().getWindow();
+                stage.setX(mouseEvent.getScreenX() + xOffset);
+                stage.setY(mouseEvent.getScreenY() + yOffset);
+            });
+        }
+    }
+
     //метод обработки выбранного задания
     private void onTaskSelected(String nameTask) {
         taskSelectionText.setText(nameTask);
@@ -212,7 +250,7 @@ public class MainController {
     @FXML
     private void buttonClickShowDetails() {
         Task task = getTaskByDisplayName();
-        boxWithDetails.setVisible(true);
+        Animations.showVBoxGrow(boxWithDetails);
         taskInformationLabel.setText(task.getDescription() + " награда: " + task.getReward() + "/" + (task.getReward() * 2));
         moreDetailsButton.setVisible(false);
     }
@@ -220,7 +258,7 @@ public class MainController {
     //кнопка скрыть подробности
     @FXML
     private void hideClickButton() {
-        boxWithDetails.setVisible(false);
+        Animations.hideVBoxShrink(boxWithDetails);
         moreDetailsButton.setVisible(true);
     }
 
@@ -300,7 +338,7 @@ public class MainController {
          int maxValue = currentValue + taskStatus.getRemainingCount();
          double progress = (double) currentValue / maxValue;
          progressBarText.setText(currentValue + "/" + maxValue);
-         progressBar.setProgress(progress);
+        Animations.animateProgress(progressBar, progress);
     }
 
     //получение задания по имени

@@ -5,6 +5,8 @@
 
 .root {
     -fx-font-family: "Segoe UI", system, sans-serif;
+      -fx-background-radius: 17px;  /* СКРУГЛЕНИЕ УГЛОВ */
+        -fx-border-radius: 17px;      /* СКРУГЛЕНИЕ РАМКИ */
 
     -fx-background-color: linear-gradient(
         from 0% 0% to 100% 100%,
@@ -13,6 +15,7 @@
         #0a0a14
     );
 }
+
 
 /* ========== ВСЕ ТЕКСТЫ БЕЛЫЕ ========== */
 .label, .text, .list-cell, .tab-label, .check-box .text,
@@ -218,7 +221,7 @@
 
 .tab-pane .tab-content-area {
     -fx-background-color: transparent;
-    -fx-padding: 16px 0 0 0;
+    -fx-padding: 9px 0 0 0;
 }
 
 /* ========== TEXT FIELD ========== */
@@ -372,4 +375,80 @@
 
 .tab-pane *.tab *.focus-indicator {
     -fx-border-color: transparent;
+}
+
+/* ========== КНОПКИ УПРАВЛЕНИЯ ОКНОМ (TITLE BAR BUTTONS) ========== */
+#closeButton, #minimizeButton {
+    -fx-background-color: transparent;
+    -fx-text-fill: #ffffff;
+    -fx-background-radius: 0px;
+    -fx-border-radius: 0px;
+    -fx-border-color: transparent;
+    -fx-padding: 0px;
+    -fx-font-size: 14px;
+    -fx-font-weight: normal;
+    -fx-cursor: hand;
+
+    /* Компактные размеры */
+    -fx-min-width: 36px;
+    -fx-pref-width: 36px;
+    -fx-max-width: 36px;
+    -fx-min-height: 32px;
+    -fx-pref-height: 32px;
+    -fx-max-height: 32px;
+
+    /* Убираем стандартные эффекты кнопок */
+    -fx-effect: none;
+    -fx-border-width: 0px;
+}
+
+/* Кнопка сворачивания */
+#minimizeButton {
+    -fx-text: "─";
+}
+
+#minimizeButton:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.12);
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.15), 6, 0, 0, 0);
+}
+
+#minimizeButton:pressed {
+    -fx-background-color: rgba(255, 255, 255, 0.08);
+    -fx-translate-y: 1px;
+}
+
+/* Кнопка закрытия */
+#closeButton {
+    -fx-text: "✕";
+}
+
+#closeButton:hover {
+    -fx-background-color: #e81123;
+    -fx-text-fill: #ffffff;
+    -fx-effect: dropshadow(gaussian, rgba(232, 17, 35, 0.4), 10, 0, 0, 2);
+}
+
+#closeButton:pressed {
+    -fx-background-color: #bf0f1d;
+    -fx-translate-y: 1px;
+}
+
+/* Альтернативный вариант для правого верхнего угла */
+.title-bar-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 14px;
+    -fx-min-width: 38px;
+    -fx-pref-width: 38px;
+    -fx-min-height: 32px;
+    -fx-pref-height: 32px;
+    -fx-cursor: hand;
+}
+
+.title-bar-button:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.15);
+}
+
+.title-bar-close:hover {
+    -fx-background-color: #e81123;
 }
